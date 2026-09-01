@@ -33,7 +33,7 @@ godot --path .
 
 ```
 .
-├── main.tscn                # The main (and currently only) scene
+├── level01.tscn             # The main (and currently only) scene
 ├── character_body_2d.gd     # Player movement script
 ├── maze_tileset.png         # Tileset used for the maze walls/floor
 ├── black_tile_32x32.png     # Tile used for the fog-of-war layer

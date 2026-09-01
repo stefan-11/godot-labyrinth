@@ -1,10 +1,10 @@
 # Architecture
 
-The entire game currently lives in a single scene, `main.tscn` (configured as the project's `run/main_scene`).
+The entire game currently lives in a single scene, `level01.tscn` (configured as the project's `run/main_scene`).
 
 ## Scene composition
 
-`main.tscn` is made up of the following nodes:
+`level01.tscn` is made up of the following nodes:
 
 - **`WallsTileMapLayer`** — a `TileMapLayer` built from `maze_tileset.png`, painted with a `TileSet` that defines a `Wand` (wall) terrain. This is the maze geometry and its collision layer.
 - **`FogOfWarTileMapLayer`** (script: `fog_of_war_tile_map_layer.gd`) — a second `TileMapLayer`, using `black_tile_32x32.png`, layered on top of the maze to implement line-of-sight fog-of-war. See [Fog of war](fog-of-war.md) for details.
@@ -21,7 +21,7 @@ The entire game currently lives in a single scene, `main.tscn` (configured as th
 `character_body_2d.gd` drives the player:
 
 - Reads input via `Input.get_vector("left", "right", "up", "down")`.
-- Sets `velocity` from that direction times an `@export var speed` (defaults to `300.0`, currently overridden to `500.0` on the node in `main.tscn`).
+- Sets `velocity` from that direction times an `@export var speed` (defaults to `300.0`, currently overridden to `500.0` on the node in `level01.tscn`).
 - Calls `move_and_slide()` each physics frame.
 
 Input actions (`up`, `down`, `left`, `right`) are defined in `project.godot` under `[input]`, currently bound to the arrow keys.
@@ -38,4 +38,4 @@ What's *ever been seen* is tracked separately by `FogOfWarTileMapLayer`, which p
 
 ## Editing the maze
 
-The maze layout and collision are stored as tile map data (a packed byte array) directly inside `main.tscn`. This is normally painted using the Godot editor's TileMap tool rather than hand-edited as text — the `.tscn` format is human-readable but contains generated UIDs, sub-resource references, and packed binary data that are error-prone to edit by hand.
+The maze layout and collision are stored as tile map data (a packed byte array) directly inside `level01.tscn`. This is normally painted using the Godot editor's TileMap tool rather than hand-edited as text — the `.tscn` format is human-readable but contains generated UIDs, sub-resource references, and packed binary data that are error-prone to edit by hand.

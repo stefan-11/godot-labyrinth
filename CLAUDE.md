@@ -28,7 +28,7 @@ There are no linters, formatters, or automated tests configured in this repo.
 
 ## Architecture
 
-The entire game currently lives in a single scene, `main.tscn` (the project's `run/main_scene`), composed of:
+The entire game currently lives in a single scene, `level01.tscn` (the project's `run/main_scene`), composed of:
 
 - **`WallsTileMapLayer`** — a `TileMapLayer` built from `maze_tileset.png`, painted with a `TileSet` that defines a `Wand` (wall) terrain. This is the maze geometry and collision layer.
 - **`FogUnknownLayer`** — a second `TileMapLayer`, using `black_tile_32x32.png`, layered over the maze to implement fog-of-war (areas the player hasn't explored/lit yet appear as black tiles).
@@ -44,7 +44,7 @@ Input actions (`up`, `down`, `left`, `right`) are defined in `project.godot` und
 
 Key gameplay logic to know when extending this project:
 - Player movement/physics: `character_body_2d.gd`.
-- Maze layout and collision: edited via the `WallsTileMapLayer` tile map data in `main.tscn` (normally painted in the Godot editor's TileMap tool rather than hand-edited as text).
+- Maze layout and collision: edited via the `WallsTileMapLayer` tile map data in `level01.tscn` (normally painted in the Godot editor's TileMap tool rather than hand-edited as text).
 - Visibility/fog-of-war and lighting are achieved purely through Godot's 2D lighting system (`CanvasModulate` + `PointLight2D` + `shadow_enabled`), not custom shader or scripted fog logic — there is currently no script that reveals/hides `FogUnknownLayer` tiles based on player position.
 
 ## Notes
