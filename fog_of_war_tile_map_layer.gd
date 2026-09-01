@@ -1,6 +1,6 @@
 extends TileMapLayer
 
-@export var player_path: NodePath = "../CharacterBody2D"
+@export var player_path: NodePath = "../Player"
 @export var walls_path: NodePath = "../WallsTileMapLayer"
 @export var vision_radius_tiles: int = 10  # tune in-editor against the torch's visual falloff                                                                                                                                                                                                                                                                      
 @onready var player: CharacterBody2D = get_node(player_path)

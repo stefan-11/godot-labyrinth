@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cvi1wup8xwpec"]
+
+[ext_resource type="Script" uid="uid://fbecqye3ym2m" path="res://character_body_2d.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://dmljewp67hqti" path="res://icon.svg" id="2_i3pqv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2eeuo"]
+size = Vector2(101, 104)
+
+[sub_resource type="Gradient" id="Gradient_0xm2m"]
+offsets = PackedFloat32Array(0, 0.18373494, 0.35843372, 0.5120482, 0.75, 0.99698794)
+colors = PackedColorArray(1, 1, 1, 1, 0.7108434, 0.7108434, 0.7108434, 1, 0.6415663, 0.6415663, 0.6415663, 1, 0.48795182, 0.48795182, 0.48795182, 1, 0.25, 0.25, 0.25, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h2yge"]
+gradient = SubResource("Gradient_0xm2m")
+fill = 1
+fill_from = Vector2(0.5135135, 0.5135135)
+fill_to = Vector2(0.16216217, 0.16216217)
+metadata/_snap_enabled = true
+metadata/_snap_count = 37
+
+[node name="Player" type="CharacterBody2D" unique_id=1203525837]
+script = ExtResource("1_onrkg")
+speed = 500.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=272962609]
+position = Vector2(1.5, -1)
+shape = SubResource("RectangleShape2D_2eeuo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1910134220]
+texture = ExtResource("2_i3pqv")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1139614404]
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1737504017]
+position = Vector2(-8.999996, -3.9999962)
+scale = Vector2(1.5384617, 1.5625)
+energy = 1.15
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_h2yge")
+texture_scale = 5.2

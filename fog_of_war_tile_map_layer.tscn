@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dpr4pja8cly5f"]
+
+[ext_resource type="Texture2D" uid="uid://d3lc84b1c7wkc" path="res://black_tile_32x32.png" id="1_jqla0"]
+[ext_resource type="Script" uid="uid://h1mx47ab8e7d" path="res://fog_of_war_tile_map_layer.gd" id="2_y0bi1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
+texture = ExtResource("1_jqla0")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2eeuo"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_1bvp3")
+
+[node name="FogOfWarTileMapLayer" type="TileMapLayer" unique_id=880073811]
+tile_set = SubResource("TileSet_2eeuo")
+script = ExtResource("2_y0bi1")

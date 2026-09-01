@@ -1,9 +1,7 @@
 [gd_scene format=4 uid="uid://cm006x110nc3j"]
 
-[ext_resource type="Script" uid="uid://fbecqye3ym2m" path="res://character_body_2d.gd" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://d3lc84b1c7wkc" path="res://black_tile_32x32.png" id="1_h2yge"]
-[ext_resource type="Texture2D" uid="uid://dmljewp67hqti" path="res://icon.svg" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://h1mx47ab8e7d" path="res://fog_of_war_tile_map_layer.gd" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://cvi1wup8xwpec" path="res://player.tscn" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://dpr4pja8cly5f" path="res://fog_of_war_tile_map_layer.tscn" id="2_0xm2m"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0xm2m"]
 polygon = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
@@ -46,9 +44,6 @@ terrain_set_0/terrain_0/name = "Wand 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_ig7tw")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2eeuo"]
-size = Vector2(101, 104)
-
 [sub_resource type="Gradient" id="Gradient_0xm2m"]
 offsets = PackedFloat32Array(0, 0.18373494, 0.35843372, 0.5120482, 0.75, 0.99698794)
 colors = PackedColorArray(1, 1, 1, 1, 0.7108434, 0.7108434, 0.7108434, 1, 0.6415663, 0.6415663, 0.6415663, 1, 0.48795182, 0.48795182, 0.48795182, 1, 0.25, 0.25, 0.25, 1, 0, 0, 0, 1)
@@ -61,19 +56,7 @@ fill_to = Vector2(0.16216217, 0.16216217)
 metadata/_snap_enabled = true
 metadata/_snap_count = 37
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
-texture = ExtResource("1_h2yge")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_2eeuo"]
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_1bvp3")
-
-[node name="Main" type="Node2D" unique_id=1793158607]
+[node name="Level01" type="Node2D" unique_id=1793158607]
 
 [node name="WallsTileMapLayer" type="TileMapLayer" parent="." unique_id=1186531368]
 position = Vector2(-1, 0)
@@ -83,27 +66,8 @@ tile_set = SubResource("TileSet_sd6pk")
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1584609329]
 color = Color(0.20332181, 0.20332184, 0.20332178, 1)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=2033646469]
+[node name="Player" parent="." unique_id=1203525837 instance=ExtResource("1_1bvp3")]
 position = Vector2(466, 592)
-script = ExtResource("1_0xm2m")
-speed = 500.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1747985202]
-position = Vector2(1.5, -1)
-shape = SubResource("RectangleShape2D_2eeuo")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1960543367]
-texture = ExtResource("1_ig7tw")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=768854442]
-
-[node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D" unique_id=1387414143]
-position = Vector2(-8.999996, -3.9999962)
-scale = Vector2(1.5384617, 1.5625)
-energy = 1.15
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_h2yge")
-texture_scale = 5.2
 
 [node name="PointLight2D2" type="PointLight2D" parent="." unique_id=977275612]
 position = Vector2(834.00006, 283)
@@ -113,6 +77,4 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_h2yge")
 texture_scale = 5.9
 
-[node name="FogOfWarTileMapLayer" type="TileMapLayer" parent="." unique_id=2092267299]
-tile_set = SubResource("TileSet_2eeuo")
-script = ExtResource("4_1bvp3")
+[node name="FogOfWarTileMapLayer" parent="." unique_id=880073811 instance=ExtResource("2_0xm2m")]
