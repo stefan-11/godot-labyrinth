@@ -19,6 +19,7 @@ metadata/_snap_enabled = true
 metadata/_snap_count = 37
 
 [node name="Player" type="CharacterBody2D" unique_id=1203525837]
+collision_layer = 2
 script = ExtResource("1_onrkg")
 speed = 500.0
 

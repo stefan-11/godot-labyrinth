@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cvi1wup8xwpec" path="res://player.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dpr4pja8cly5f" path="res://fog_of_war_tile_map_layer.tscn" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://dmljewp67hqti" path="res://icon.svg" id="3_oy1tr"]
+[ext_resource type="Script" uid="uid://ccfji3k62ysls" path="res://monster.gd" id="3_ucm2n"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0xm2m"]
 polygon = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
@@ -56,6 +58,15 @@ fill_to = Vector2(0.16216217, 0.16216217)
 metadata/_snap_enabled = true
 metadata/_snap_count = 37
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2eeuo"]
+size = Vector2(119.5, 121)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2eeuo"]
+radius = 351.19937
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sd6pk"]
+radius = 160.82289
+
 [node name="Level01" type="Node2D" unique_id=1793158607]
 
 [node name="WallsTileMapLayer" type="TileMapLayer" parent="." unique_id=1186531368]
@@ -74,6 +85,33 @@ texture = SubResource("GradientTexture2D_h2yge")
 texture_scale = 5.9
 
 [node name="Player" parent="." unique_id=1203525837 instance=ExtResource("1_1bvp3")]
-position = Vector2(133, 143)
+position = Vector2(1213, 429)
 
 [node name="FogOfWarTileMapLayer" parent="." unique_id=880073811 instance=ExtResource("2_0xm2m")]
+
+[node name="Monster" type="CharacterBody2D" parent="." unique_id=2037925637]
+position = Vector2(1223, -52)
+collision_layer = 4
+script = ExtResource("3_ucm2n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monster" unique_id=933252527]
+position = Vector2(-0.25, -1.5)
+shape = SubResource("RectangleShape2D_2eeuo")
+
+[node name="Sprite2D" type="Sprite2D" parent="Monster" unique_id=1407441443]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("3_oy1tr")
+
+[node name="AlertRangeArea2D" type="Area2D" parent="Monster" unique_id=1385826665]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monster/AlertRangeArea2D" unique_id=1804952918]
+shape = SubResource("CircleShape2D_2eeuo")
+
+[node name="AttackRangeArea2D" type="Area2D" parent="Monster" unique_id=1805324058]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monster/AttackRangeArea2D" unique_id=101071570]
+shape = SubResource("CircleShape2D_sd6pk")
