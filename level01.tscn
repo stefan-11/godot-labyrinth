@@ -64,18 +64,16 @@ tile_map_data = PackedByteArray("AAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAA
 tile_set = SubResource("TileSet_sd6pk")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1584609329]
-visible = false
-color = Color(0.20332181, 0.20332184, 0.20332178, 1)
-
-[node name="Player" parent="." unique_id=1203525837 instance=ExtResource("1_1bvp3")]
-position = Vector2(133, 143)
+color = Color(0.82605994, 0.82606006, 0.8260599, 1)
 
 [node name="PointLight2D2" type="PointLight2D" parent="." unique_id=977275612]
 position = Vector2(834.00006, 283)
 scale = Vector2(3.293269, 3.2752404)
-energy = 0.7
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_h2yge")
 texture_scale = 5.9
+
+[node name="Player" parent="." unique_id=1203525837 instance=ExtResource("1_1bvp3")]
+position = Vector2(133, 143)
 
 [node name="FogOfWarTileMapLayer" parent="." unique_id=880073811 instance=ExtResource("2_0xm2m")]
