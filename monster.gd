@@ -4,9 +4,13 @@ enum State { IDLE, CHASING, ATTACKING }
 
 @export var speed: float = 150.0
 @export var attack_cooldown: float = 1.0
+@export var player_path: NodePath = "../Player"
+@export var vision_area_path: NodePath = "VisionArea2D"  # relative to player
 
 @onready var alert_range_area: Area2D = $AlertRangeArea2D
 @onready var attack_range_area: Area2D = $AttackRangeArea2D
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var vision_area: Area2D = get_node(player_path).get_node(vision_area_path)
 
 var _space_state: PhysicsDirectSpaceState2D
 var _state: State = State.IDLE
@@ -20,6 +24,9 @@ func _ready() -> void:
 	alert_range_area.body_exited.connect(_on_alert_range_area_body_exited)
 	attack_range_area.body_entered.connect(_on_attack_range_area_body_entered)
 	attack_range_area.body_exited.connect(_on_attack_range_area_body_exited)
+	sprite.visible = false
+	vision_area.body_entered.connect(_on_vision_area_body_entered)
+	vision_area.body_exited.connect(_on_vision_area_body_exited)
 
 func _physics_process(delta: float) -> void:
 	var previous_state := _state
@@ -70,3 +77,11 @@ func _on_attack_range_area_body_entered(_body: Node2D) -> void:
 
 func _on_attack_range_area_body_exited(_body: Node2D) -> void:
 	_player_in_attack_range = false
+
+func _on_vision_area_body_entered(body: Node2D) -> void:
+	if body == self:
+		sprite.visible = true
+
+func _on_vision_area_body_exited(body: Node2D) -> void:
+	if body == self:
+		sprite.visible = false

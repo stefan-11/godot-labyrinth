@@ -2,10 +2,11 @@ extends TileMapLayer
 
 @export var player_path: NodePath = "../Player"
 @export var walls_path: NodePath = "../WallsTileMapLayer"
-@export var vision_radius_tiles: int = 10  # tune in-editor against the torch's visual falloff                                                                                                                                                                                                                                                                      
+@export var vision_area_path: NodePath = "VisionArea2D"  # relative to player
 @export var wall_reveal_radius_tiles: int = 3  # radius of walls revealed around each newly-revealed floor tile
 @onready var player: CharacterBody2D = get_node(player_path)
 @onready var walls: TileMapLayer = get_node(walls_path)
+@onready var vision_collision_shape: CollisionShape2D = player.get_node(vision_area_path).get_node("CollisionShape2D")
 
 var _space_state: PhysicsDirectSpaceState2D
 var _last_player_tile: Vector2i = Vector2i(1 << 30, 1 << 30)  # sentinel forces first reveal
@@ -48,18 +49,25 @@ func _reveal_around(center: Vector2i) -> void:
 	_force_reveal(center + Vector2i.LEFT)
 	_force_reveal(center + Vector2i.RIGHT)
 
-	var r := vision_radius_tiles
+	var vision_radius := _vision_radius_tiles()
+	var r := int(ceil(vision_radius))
 	for dy in range(-r, r + 1):
 		for dx in range(-r, r + 1):
 			var coord := center + Vector2i(dx, dy)
 			if get_cell_source_id(coord) == -1:
 				continue  # already revealed, or was never painted as fog
-			if dx * dx + dy * dy > r * r:
+			if dx * dx + dy * dy > vision_radius * vision_radius:
 				continue  # circular radius filter, no sqrt needed
 			if _has_line_of_sight(coord):
 				erase_cell(coord)
 				if not _is_wall(coord):
 					_reveal_walls_around(coord)
+
+func _vision_radius_tiles() -> float:
+	var shape := vision_collision_shape.shape as CircleShape2D
+	assert(shape != null, "VisionArea2D/CollisionShape2D must use a CircleShape2D")
+	var radius_px: float = shape.radius * vision_collision_shape.global_scale.x
+	return radius_px / tile_set.tile_size.x
 
 func _reveal_walls_around(floor_coord: Vector2i) -> void:
 	var r := wall_reveal_radius_tiles
