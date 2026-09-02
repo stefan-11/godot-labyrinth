@@ -3,6 +3,7 @@ extends TileMapLayer
 @export var player_path: NodePath = "../Player"
 @export var walls_path: NodePath = "../WallsTileMapLayer"
 @export var vision_radius_tiles: int = 10  # tune in-editor against the torch's visual falloff                                                                                                                                                                                                                                                                      
+@export var wall_reveal_radius_tiles: int = 3  # radius of walls revealed around each newly-revealed floor tile
 @onready var player: CharacterBody2D = get_node(player_path)
 @onready var walls: TileMapLayer = get_node(walls_path)
 
@@ -56,10 +57,33 @@ func _reveal_around(center: Vector2i) -> void:
 			if dx * dx + dy * dy > r * r:
 				continue  # circular radius filter, no sqrt needed
 			if _has_line_of_sight(coord):
-					erase_cell(coord)
+				erase_cell(coord)
+				if not _is_wall(coord):
+					_reveal_walls_around(coord)
+
+func _reveal_walls_around(floor_coord: Vector2i) -> void:
+	var r := wall_reveal_radius_tiles
+	for dy in range(-r, r + 1):
+		for dx in range(-r, r + 1):
+			if dx * dx + dy * dy > r * r:
+				continue  # circular radius filter, no sqrt needed
+			var coord := floor_coord + Vector2i(dx, dy)
+			if get_cell_source_id(coord) == -1:
+				continue  # already revealed, or was never painted as fog
+			if not _is_wall(coord):
+				continue  # this pass only ever reveals walls
+			erase_cell(coord)
+
+func _is_wall(coord: Vector2i) -> bool:
+	var tile_data := walls.get_cell_tile_data(coord)
+	return tile_data != null and tile_data.get_collision_polygons_count(0) > 0
+
 func _force_reveal(coord: Vector2i) -> void:
-	if get_cell_source_id(coord) != -1:
-		erase_cell(coord)
+	if get_cell_source_id(coord) == -1:
+		return
+	erase_cell(coord)
+	if not _is_wall(coord):
+		_reveal_walls_around(coord)
 
 func _has_line_of_sight(coord: Vector2i) -> bool:
 	var target_world: Vector2 = to_global(map_to_local(coord))
